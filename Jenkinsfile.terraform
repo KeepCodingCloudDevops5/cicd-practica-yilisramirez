@@ -1,0 +1,74 @@
+pipeline {
+    agent {
+        label('terraform')
+    }
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        TF_IN_AUTOMATION      = '1'
+    }
+
+    stages {
+        stage('dev_init') {
+            steps {
+                dir('infra') {
+                    sh 'terraform init -backend-config='key=stage_dev/terraform.tfstate''
+                }
+            }
+        }
+
+        stage('dev_plan') {
+            steps {
+                dir('infra') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('dev_format') {
+            steps {
+                dir('infra') {
+                    sh 'terraform fmt'
+                }
+            }
+        }
+
+        stage('dev_apply') {
+            steps {
+                dir('infra') {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+
+        stage('prod_init') {
+            steps {
+                dir('infra') {
+                    sh 'terraform init -backend-config='key=stage_prod/terraform.tfstate''
+                }
+            }
+        }
+
+        stage('prod_plan') {
+            steps {
+                dir('infra') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+
+        stage('prod_format') {
+            steps {
+                dir('infra') {
+                    sh 'terraform fmt'
+                }
+            }
+        }
+
+        stage('prod_apply') {
+            steps {
+                dir('infra') {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
