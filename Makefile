@@ -1,8 +1,4 @@
-all: clean init plan format apply
-
-clean:
-	@echo clean step
-	cd infra rm -rf .terraform
+all: init plan format apply clean
 
 init:
 	@echo init step
@@ -19,3 +15,7 @@ format:
 apply:
 	@echo apply step
 	cd infra && terraform apply -auto-approve
+
+clean:
+	@echo clean step
+	cd infra && rm -rf .terraform

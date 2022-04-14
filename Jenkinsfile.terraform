@@ -41,6 +41,14 @@ pipeline {
             }
         }
 
+        stage('clean') {
+            steps {
+                dir('infra') {
+                    sh 'rm -rf .terraform'
+                }
+            }
+        }
+
         stage('prod_init') {
             steps {
                 dir('infra') {
@@ -52,7 +60,7 @@ pipeline {
         stage('prod_plan') {
             steps {
                 dir('infra') {
-                    sh 'terraform plan'
+                    sh 'terraform plan -var="s3_bucket_name=acme-storage-prod-kc"'
                 }
             }
         }
@@ -68,7 +76,10 @@ pipeline {
         stage('prod_apply') {
             steps {
                 dir('infra') {
-                    sh 'terraform apply -auto-approve'
+                    timeout(time: 10, unit: 'MINUTES') {
+                        input message: 'Are you sure you want to deploy?', ok: 'Yes, deploy storage in production'
+                            sh 'terraform apply -var="s3_bucket_name=acme-storage-prod-kc" -auto-approve'
+                    }
                 }
             }
         }
