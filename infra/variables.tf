@@ -7,9 +7,6 @@ variable "aws_region" {
 }
 
 variable "s3_bucket_name" {
-  type = list(any)
-  default = [
-    "acme-storage-dev-kc",
-    "acme-storage-prod-kc",
-  ]
+  type    = string
+  default = "acme-storage-dev-kc"
 }
