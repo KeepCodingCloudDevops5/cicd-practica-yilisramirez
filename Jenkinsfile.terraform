@@ -12,7 +12,7 @@ pipeline {
         stage('dev_init') {
             steps {
                 dir('infra') {
-                    sh 'terraform init -backend-config='key=stage_dev/terraform.tfstate''
+                    sh 'terraform init -backend-config='key=infra_dev/terraform.tfstate''
                 }
             }
         }
@@ -52,7 +52,7 @@ pipeline {
         stage('prod_init') {
             steps {
                 dir('infra') {
-                    sh 'terraform init -backend-config='key=stage_prod/terraform.tfstate''
+                    sh 'terraform init -backend-config='key=infra_prod/terraform.tfstate''
                 }
             }
         }
