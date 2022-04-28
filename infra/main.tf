@@ -5,7 +5,7 @@ terraform {
       version = "~> 4.9.0"
     }
   }
-  backend "s3" {
+    backend "s3" {
     bucket  = "acme-storage-dev-kc-storage"
     key     = "infra_dev/terraform.tfstate"
     region  = "eu-west-1"
@@ -14,8 +14,9 @@ terraform {
 }
 
 provider "aws" {
-  profile = var.aws_profile
-  region  = var.aws_region
+  profile                  = var.aws_profile
+  region                   = var.aws_region
+  shared_credentials_files = ["~/.aws/credentials"]
 }
 
 resource "aws_s3_bucket" "storage" {
