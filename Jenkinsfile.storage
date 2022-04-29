@@ -17,13 +17,13 @@ pipeline {
                 echo 'Dev storage size is: $Size'
                 }
             }
-        stage('Remove storage-Dev') {
+        /*stage('Remove storage-Dev') {
                 when {
                     expression {$Size => /20MB/ } 
                 } 
                 steps {
                     sh'aws s3api delete-object --bucket acme-storage-dev-kc-storage --key infra_dev/terraform.tfstate --region eu-west-1 --output json'
                     } 
-                } 
+                } */
             }
         }       
