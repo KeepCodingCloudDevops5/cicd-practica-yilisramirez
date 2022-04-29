@@ -7,23 +7,21 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         TF_IN_AUTOMATION      = '1'
     }
-    triggers{
+    triggers {
         cron('*/10 * * * *')
     } 
     stages {
-        stage('Storage space-Dev') {
+        stage('Storage-Dev') {
             steps {
-                sh 'aws s3api list-object-versions --bucket acme-storage-dev-kc-storage --output json --query "[sum(Versions[].Size)]"'
-                echo 'Dev storage size is: $Size'
+                sh 'aws s3 ls s3://acme-storage-dev-kc-storage --recursive --human-readable --summarize --region eu-west-1'
+                sh 'aws s3 rm s3://acme-storage-dev-kc-storage/infra_dev/ --include "Total Size:2 MB" --region eu-west-1 --output json'
                 }
             }
-        /*stage('Remove storage-Dev') {
-                when {
-                    expression {$Size => /20MB/ } 
-                } 
+        stage('Storage-Prod') {
                 steps {
-                    sh'aws s3api delete-object --bucket acme-storage-dev-kc-storage --key infra_dev/terraform.tfstate --region eu-west-1 --output json'
-                    } 
-                } */
+                sh 'aws s3 ls s3://acme-storage-prod-kc-storage --recursive --human-readable --summarize --region eu-west-1'
+                sh 'aws s3 rm s3://acme-storage-prod-kc-storage/infra_prod/ --include "Total Size:2 MB" --region eu-west-1 --output json'
+                }
             }
-        }       
+        }
+    }            
