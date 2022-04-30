@@ -195,7 +195,7 @@ This practice has the purpose to provide storage for dev and production environm
     ![docker agent](https://user-images.githubusercontent.com/39458920/166114026-c72756a5-740b-4686-b9de-8484734d42a5.JPG)
 
     Once created the docker agent, so we can define the Jenkinsfile to deploy the s3 bucket via terraform commands.
-    We had to add the AWS credentials in Jenkins and name them in the jenkinsfile as environment variable.
+    We had to add the AWS credentials in Jenkins and we reference them in the jenkinsfile as environment variable.
     
     ```
     pipeline {
@@ -218,4 +218,12 @@ This practice has the purpose to provide storage for dev and production environm
      
     ![pipeline terraform](https://user-images.githubusercontent.com/39458920/166102413-561c4810-7eab-4a1c-9012-0fdc27c76a20.JPG)
 
-    Now we proceed with the storage pipeline to check the s3 bucket size and empty the bucket when it reaches 20 MB
+    Now we proceed with the storage pipeline to check the s3 bucket size every 10' and empty the bucket when it reaches 20 MB
+    
+    ![pepiline storage](https://user-images.githubusercontent.com/39458920/166116795-d898547b-d1ee-464f-89c5-cfc3c1b5a733.JPG)
+     
+    ![logs](https://user-images.githubusercontent.com/39458920/166116938-106ff046-3893-4423-9781-ff73e55ff27a.JPG)
+     
+    ![pipe log](https://user-images.githubusercontent.com/39458920/166116933-7f857371-06f8-4edf-81ff-73e76c4b5304.JPG)
+
+
