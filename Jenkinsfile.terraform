@@ -19,9 +19,6 @@ pipeline {
 
         stage('dev_plan') {
             steps {
-            withCredentials([usernamePassword(credentialsId: 'github-access',
-                                          usernameVariable: 'GITHUB_USER',
-                                          passwordVariable: 'GITHUB_ACCESS_TOKEN')])
                 dir('infra') {
                     sh 'terraform plan'
                 }
