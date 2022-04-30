@@ -14,13 +14,13 @@ pipeline {
         stage('Storage-Dev') {
             steps {
                 sh 'aws s3 ls s3://acme-storage-dev-kc-storage --recursive --human-readable --summarize --region eu-west-1'
-                sh 'aws s3 rm s3://acme-storage-dev-kc-storage/infra_dev/ --include "Total Size:2 MB" --region eu-west-1 --output json'
+                sh 'aws s3 rm s3://acme-storage-dev-kc-storage/infra_dev/ --include "Total Size:20 MB" --region eu-west-1 --output json'
                 }
             }
         stage('Storage-Prod') {
                 steps {
                 sh 'aws s3 ls s3://acme-storage-prod-kc-storage --recursive --human-readable --summarize --region eu-west-1'
-                sh 'aws s3 rm s3://acme-storage-prod-kc-storage/infra_prod/ --include "Total Size:2 MB" --region eu-west-1 --output json'
+                sh 'aws s3 rm s3://acme-storage-prod-kc-storage/infra_prod/ --include "Total Size:20 MB" --region eu-west-1 --output json'
                 }
             }
         }
