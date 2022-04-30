@@ -9,6 +9,9 @@ pipeline {
     }
 
     stages {
+        withCredentials([usernamePassword(credentialsId: 'github-access',
+                                          usernameVariable: 'GITHUB_USER',
+                                          passwordVariable: 'GITHUB_ACCESS_TOKEN')])
         stage('dev_init') {
             steps {
                 dir('infra') {
