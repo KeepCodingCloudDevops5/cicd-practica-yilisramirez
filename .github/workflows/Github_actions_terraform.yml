@@ -36,9 +36,9 @@ jobs:
     - name: Setup dev environment credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS-REGION: eu-west-1
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
 
     # Initialize Terraform working directory
     - name: Dev Terraform Init
@@ -73,9 +73,9 @@ jobs:
     - name: Setup prod environment credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS-REGION: eu-west-1
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
 
     # Initialize Terraform working directory
     - name: Prod Terraform Init
