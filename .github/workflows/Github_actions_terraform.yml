@@ -30,7 +30,7 @@ jobs:
     # Initialize Terraform working directory
     - name: Dev Terraform Init
       working-directory: ./infra
-      run: terraform init -backend-config="key=infra_dev/terraform.tfstate
+      run: terraform init -backend-config="key=infra_dev/terraform.tfstate"
 
     # Generates an execution plan for Terraform
     - name: Dev Terraform Plan
@@ -67,7 +67,7 @@ jobs:
     # Initialize Terraform working directory
     - name: Prod Terraform Init
       working-directory: ./infra
-      run: terraform init -backend-config="key=infra_prod/terraform.tfstate
+      run: terraform init -backend-config="key=infra_prod/terraform.tfstate"
 
     # Generates an execution plan for Terraform
     - name: Prod Terraform Plan
