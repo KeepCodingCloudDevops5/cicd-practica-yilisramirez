@@ -226,10 +226,10 @@ This practice has the purpose to provide storage for dev and production environm
      
     ![pipe log](https://user-images.githubusercontent.com/39458920/166116933-7f857371-06f8-4edf-81ff-73e76c4b5304.JPG)
 
-     Now we have also deployed our storage pipeline in Github actions, so in order to get our pipeline running, we had to configure the AWS credentials in the repository. In our github repository, we navigate to <b>settings-> secrets -> actions -> click on New repository secret button.</b>
+     Now we have also deployed our storage pipeline in Github actions, so in order to get our pipeline running we had to configure the AWS credentials in the repository. In our github repository, we navigate to <b>settings-> secrets -> actions -> click on New repository secret button.</b>
      
      ![secrets](https://user-images.githubusercontent.com/39458920/166136127-cf466677-fc54-4301-8cdf-cfcab9969b96.JPG)
 
-     After having defined the .yaml file and replaced the corresponding variables, we run the pipeline and finally it's working properly.
+     After having defined the .yaml file, specified the working directory and replaced the corresponding variables, we run the pipeline and finally it's working properly.
      
      ![ghactions](https://user-images.githubusercontent.com/39458920/166135773-38f025d0-c972-444d-beca-a73eedbd1d33.JPG)
