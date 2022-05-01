@@ -8,14 +8,13 @@ This practice has the purpose to provide storage for dev and production environm
 - AWS cli
 - IAM user
 - GitHub account
-- Makefile
 - Jenkins
 - Jenkins plugins --> `Folders` `build timeout` `timestamper` `pipeline` `pipeline: stage view` `Git` `SSH build agents` `SSH Agent Plugin` `Docker` `Job DSL`
 - Docker
 - Docker compose
 
 # Requirements
- As first step we will be creating an IAM user to use terraform.
+1. As first step we will be creating an IAM user to use terraform.
 
    Open the AWS console and at the IAM dashboard, click on <b>User -> Add user</b>. Enter a username and then select <b>Access key - Programmatic access</b>.
    
@@ -227,11 +226,10 @@ This practice has the purpose to provide storage for dev and production environm
      
     ![pipe log](https://user-images.githubusercontent.com/39458920/166116933-7f857371-06f8-4edf-81ff-73e76c4b5304.JPG)
 
-     Now we have also deployed our storage pipeline in <b>Github actions</b>, so in order to get our pipeline running, we had to configure the AWS credentials in the repository. In our github repository, we navigate to <b>settings-> secrets -> actions -> click on New repository secret button.</b>
+     Now we have also deployed our storage pipeline in Github actions, so in order to get our pipeline running, we had to configure the AWS credentials in the repository. In our github repository, we navigate to <b>settings-> secrets -> actions -> click on New repository secret button.</b>
      
      ![secrets](https://user-images.githubusercontent.com/39458920/166136127-cf466677-fc54-4301-8cdf-cfcab9969b96.JPG)
 
-     After having defined the .yaml file, specified the working directory `./infra` and replaced the corresponding variables, we run the pipeline and finally it's working properly.
+     After having defined the .yaml file and replaced the corresponding variables, we run the pipeline and finally it's working properly.
      
      ![ghactions](https://user-images.githubusercontent.com/39458920/166135773-38f025d0-c972-444d-beca-a73eedbd1d33.JPG)
-
