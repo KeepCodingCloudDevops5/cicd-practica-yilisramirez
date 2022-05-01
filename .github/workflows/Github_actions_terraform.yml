@@ -1,0 +1,98 @@
+# This workflow installs the latest version of Terraform CLI and configures the Terraform CLI configuration file
+# with an API token for Terraform Cloud (app.terraform.io). On pull request events, this workflow will run
+# `terraform init`, `terraform fmt`, and `terraform plan` (speculative plan via Terraform Cloud). On push events
+# to the main branch, `terraform apply` will be executed.
+#
+# Documentation for `hashicorp/setup-terraform` is located here: https://github.com/hashicorp/setup-terraform
+#
+# To use this workflow, you will need to complete the following setup steps.
+#
+# 1. Create a `main.tf` file in the root of this repository with the `remote` backend and one or more resources defined.
+#   Example `main.tf`:
+#     # The configuration for the `remote` backend.
+
+name: 'Deploy AWS S3 bucket'
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  storage-dev:
+    name: 'Storage-dev'
+    runs-on: ubuntu-latest
+    environment: dev
+    
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout storage dev
+      uses: actions/checkout@v3
+
+    - name: Setup dev environment credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS-REGION: eu-west-1
+
+    # Initialize Terraform working directory
+    - name: Dev Terraform Init
+      working-directory: ./infra
+      run: terraform init -backend-config="key=infra_dev/terraform.tfstate
+
+    # Generates an execution plan for Terraform
+    - name: Dev Terraform Plan
+      working-directory: ./infra
+      run: terraform plan
+      
+    # Checks that all Terraform configuration files are aligned to a canonical format
+    - name: Dev Terraform Format
+      working-directory: ./infra
+      run: terraform fmt
+
+      # Deploys infraestructure in Dev environment
+    - name: Dev Terraform Apply
+      working-directory: ./infra
+      run: terraform apply -var="s3_bucket_name=acme-storage-dev-kc" -auto-approve
+      
+  storage-prod:
+    name: 'Storage-prod'
+    runs-on: ubuntu-latest
+    environment: prod
+    
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout storage prod
+      uses: actions/checkout@v3
+
+    - name: Setup prod environment credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS-REGION: eu-west-1
+
+    # Initialize Terraform working directory
+    - name: Prod Terraform Init
+      working-directory: ./infra
+      run: terraform init -backend-config="key=infra_prod/terraform.tfstate
+
+    # Generates an execution plan for Terraform
+    - name: Prod Terraform Plan
+      working-directory: ./infra
+      run: terraform plan
+
+    # Checks that all Terraform configuration files are aligned to a canonical format
+    - name: Prod Terraform Format
+      working-directory: ./infra
+      run: terraform fmt
+
+      # Deploys infraestructure in Prod environment
+    - name: Prod Terraform Apply
+      working-directory: ./infra
+      run: terraform apply -var="s3_bucket_name=acme-storage-prod-kc" -auto-approve
